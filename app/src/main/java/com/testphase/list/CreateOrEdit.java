@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.app.Fragment;
 
 /**
  * Created by deea on 07/12/15.
