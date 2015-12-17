@@ -54,8 +54,8 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
 
             Cursor rs = dbHelper.getItem(itemID);
             rs.moveToFirst();
-            String itemName = rs.getString(rs.getColumnIndex(DbHelper.ITEM_COLUMN_NAME));
-            String itemDescription = rs.getString(rs.getColumnIndex(DbHelper.ITEM_COLUMN_DESC));
+            String itemName = rs.getString(rs.getColumnIndex(ItemContract.Table1.ITEM_COLUMN_NAME));
+            String itemDescription = rs.getString(rs.getColumnIndex(ItemContract.Table1.ITEM_COLUMN_DESC));
 
             if (!rs.isClosed()) {
                 rs.close();

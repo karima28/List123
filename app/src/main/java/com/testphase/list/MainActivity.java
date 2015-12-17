@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         final Cursor cursor = dbHelper.getAllItems();
         String [] columns = new String[]{
-                DbHelper.ITEM_COLUMN_ID,
-                DbHelper.ITEM_COLUMN_NAME
+                ItemContract.Table1.ITEM_COLUMN_ID,
+                ItemContract.Table1.ITEM_COLUMN_NAME
         };
 
         int [] widgets = new int[]{
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivity.this.listView.getItemAtPosition(position);
-                int itemID = itemCursor.getInt(itemCursor.getColumnIndex(DbHelper.ITEM_COLUMN_ID));
+                int itemID = itemCursor.getInt(itemCursor.getColumnIndex(ItemContract.Table1.ITEM_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEdit.class);
                 intent.putExtra(KEY_EXTRA_CONTACT_ID, itemID);
                 startActivity(intent);
