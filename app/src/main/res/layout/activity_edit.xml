@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout
@@ -23,6 +23,16 @@
             <requestFocus />
         </EditText>
 
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextName"
+            android:layout_below="@+id/editTextName"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="@dimen/text_size" />
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
@@ -31,6 +41,16 @@
             android:layout_toRightOf="@+id/editTextName"
             android:layout_alignParentLeft="true"
             android:text="@string/name"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editTextDescription"
+            android:layout_toRightOf="@+id/editTextDescription"
+            android:layout_alignParentLeft="true"
+            android:text="@string/description"
             android:textSize="@dimen/text_size" />
 
 
@@ -76,4 +96,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</ListView>
+</ScrollView>

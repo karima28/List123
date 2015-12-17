@@ -5,11 +5,11 @@
     tools:context="com.testphase.list.CreateOrEdit">
 
     <item
-        android:id="@+id/Edit_Person"
+        android:id="@+id/Edit_Item"
         android:orderInCategory="100"
         android:title="@string/edit"/>
     <item
-        android:id="@+id/Delete_Person"
+        android:id="@+id/Delete_Item"
         android:orderInCategory="100"
         android:title="@string/delete"/>
 </menu>

@@ -20,6 +20,7 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
 
     private DbHelper dbHelper;
     EditText nameEditText;
+    EditText descriptionEditText;
 
     Button saveButton;
     LinearLayout buttonLayout;
@@ -35,6 +36,7 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_edit);
         nameEditText = (EditText) findViewById(R.id.editTextName);
+        descriptionEditText = (EditText) findViewById(R.id.editTextDescription);
 
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
@@ -52,15 +54,20 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
 
             Cursor rs = dbHelper.getItem(itemID);
             rs.moveToFirst();
-            String personName = rs.getString(rs.getColumnIndex(DbHelper.COLUMN_ITEM_NAME));
+            String itemName = rs.getString(rs.getColumnIndex(DbHelper.ITEM_COLUMN_NAME));
+            String itemDescription = rs.getString(rs.getColumnIndex(DbHelper.ITEM_COLUMN_DESC));
 
             if (!rs.isClosed()) {
                 rs.close();
             }
 
-            nameEditText.setText(personName);
+            nameEditText.setText(itemName);
             nameEditText.setFocusable(false);
             nameEditText.setClickable(false);
+
+            descriptionEditText.setText((CharSequence) itemDescription);
+            descriptionEditText.setFocusable(false);
+            descriptionEditText.setClickable(false);
         }
     }
 
@@ -77,8 +84,11 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
                 nameEditText.setFocusableInTouchMode(true);
                 nameEditText.setClickable(true);
 
-
+                descriptionEditText.setEnabled(true);
+                descriptionEditText.setFocusableInTouchMode(true);
+                descriptionEditText.setClickable(true);
                 return;
+
             case R.id.deleteButton:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(R.string.deleteItem)
@@ -97,7 +107,7 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
                             }
                         });
                 AlertDialog d = builder.create();
-                d.setTitle("Delete Person?");
+                d.setTitle("Delete Item?");
                 d.show();
                 //return;
         }
@@ -105,7 +115,8 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
 
     public void persistItem() {
         if(itemID > 0) {
-            if(dbHelper.updateItem(itemID, nameEditText.getText().toString())) {
+            if(dbHelper.updateItem(itemID, nameEditText.getText().toString(),
+                    descriptionEditText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Item updated successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -116,7 +127,8 @@ public class CreateOrEdit extends AppCompatActivity implements View.OnClickListe
             }
         }
         else {
-            if(dbHelper.insertItem(nameEditText.getText().toString())) {
+            if(dbHelper.insertItem(nameEditText.getText().toString(),
+                    descriptionEditText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Item added successfully", Toast.LENGTH_SHORT).show();
             }
             else{

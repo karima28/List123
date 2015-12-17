@@ -8,17 +8,23 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 /**
  * Created by deea on 07/12/15.
  */
+
+
 public class DbHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "itemlist.db";
 
-    public static final String TABLE_NAME = "itemlist";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_ITEM_NAME = "name";
+    public static final String ITEM_TABLE_NAME = "itemlist";
+    public static final String ITEM_COLUMN_ID = "_id";
+    public static final String ITEM_COLUMN_NAME = "name";
+    public static final String ITEM_COLUMN_DESC = "description";
+
 
     public DbHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,62 +34,65 @@ public class DbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(
-                "CREATE TABLE " + TABLE_NAME + "(" +
-                        COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                        COLUMN_ITEM_NAME + " TEXT);"
+                "CREATE TABLE " + ITEM_TABLE_NAME +
+                        "(" + ITEM_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                        ITEM_COLUMN_NAME + " TEXT, " +
+                        ITEM_COLUMN_DESC + " TEXT)"
         );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ITEM_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertItem(String name){
+    public boolean insertItem(String name, String description){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COLUMN_ITEM_NAME, name);
+        contentValues.put(ITEM_COLUMN_NAME, name);
+        contentValues.put(ITEM_COLUMN_DESC, description);
 
-        db.insert(TABLE_NAME, null, contentValues);
+        db.insert(ITEM_TABLE_NAME, null, contentValues);
         return true;
     }
 
     public int numberOfRows() {
         SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, ITEM_TABLE_NAME);
         return numRows;
     }
 
-    public boolean updateItem(Integer id, String name){
+    public boolean updateItem(Integer id, String name, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COLUMN_ITEM_NAME, name);
+        contentValues.put(ITEM_COLUMN_NAME, name);
+        contentValues.put(ITEM_COLUMN_DESC, description);
 
-        db.update(TABLE_NAME, contentValues, COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        db.update(ITEM_TABLE_NAME, contentValues, ITEM_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
 
         return true;
     }
 
     public Integer deleteItem(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,
-                COLUMN_ID + " = ? ",
+        return db.delete(ITEM_TABLE_NAME,
+                ITEM_COLUMN_ID + " = ? ",
                 new String[] { Integer.toString(id) });
     }
 
     public Cursor getItem(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        Cursor res = db.rawQuery("SELECT * FROM " + ITEM_TABLE_NAME + " WHERE " +
+                ITEM_COLUMN_ID + "=?", new String[]{Integer.toString(id)});
         return res;
     }
 
     public Cursor getAllItems(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor res = db.rawQuery("SELECT * FROM " + ITEM_TABLE_NAME, null);
         return res;
     }
 }

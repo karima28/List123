@@ -9,8 +9,7 @@
     <string name="save">Save Item</string>
 
     <string name="name">Name</string>
-
-
+    <string name="description">Description</string>
 
     <string name="deleteItem">Confirm item deletion.</string>
     <string name="yes">Confirm</string>
