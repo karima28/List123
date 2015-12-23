@@ -1,10 +1,11 @@
 package com.testphase.list;
 
+import android.media.Image;
 import android.provider.BaseColumns;
 
 public class ItemContract {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "itemlist.db";
 
 
@@ -21,7 +22,6 @@ public class ItemContract {
         public static final String ITEM_COLUMN_ID = "_id";
         public static final String ITEM_COLUMN_NAME = "name";
         public static final String ITEM_COLUMN_DESC = "description";
-
     }
 
     /* ADD THIS TABLE LATER !!

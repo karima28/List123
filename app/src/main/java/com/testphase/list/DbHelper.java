@@ -17,15 +17,6 @@ import java.util.HashMap;
 
 public class DbHelper extends SQLiteOpenHelper{
 
-    /*public static final int DATABASE_VERSION = 2;
-    public static final String DATABASE_NAME = "itemlist.db";
-
-    public static final String ITEM_TABLE_NAME = "itemlist";
-    public static final String ITEM_COLUMN_ID = "_id";
-    public static final String ITEM_COLUMN_NAME = "name";
-    public static final String ITEM_COLUMN_DESC = "description";*/
-
-
     public DbHelper(Context context){
         super(context, ItemContract.DATABASE_NAME, null, ItemContract.DATABASE_VERSION);
     }
